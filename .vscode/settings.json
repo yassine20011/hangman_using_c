@@ -37,5 +37,6 @@
   "files.associations": {
     "*.html": "html",
     "functions.h": "c"
-  }
+  },
+  "C_Cpp.errorSquiggles": "disabled"
 }

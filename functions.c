@@ -3,7 +3,7 @@
 #include "functions.h"
 #include <ctype.h>
 #include <time.h>
-#include <time.h>
+#include <string.h>
 
 int difficulty[] = {10, 5, 3};
 
@@ -110,7 +110,7 @@ int isExist(char *word, char letter)
 void Game(void)
 {
     srand(time(NULL)); // pour avoir des nombres aleatoires sans repetition
-    int c, index = 0;
+    int c;
     char *words[] = {"jeu", "pendu", "programmation", "c", "python", "javascript", "java", "c++", "c#", "php", "ruby", "swift", "go", "rust", "kotlin", "dart", "scala", "haskell", "erlang", "elixir", "prolog", "clojure", "lisp", "fortran", "cobol", "pascal", "ada", "perl", "lua", "bash", "zsh"};
     int wordsLen = arrayLen(words);
     char *randomWord = words[random(0, wordsLen - 1)];
@@ -123,12 +123,22 @@ void Game(void)
     printf("%s\n", randomWord);
     do
     {
-        printf("\rSaisissez une lettre: ");
-        fflush(stdout);
+
+        if (strcmp(randomWord, player.word) == 0)
+        {
+            printf("Bravo vous avez gagne!\n");
+            break;
+        }
+
+        printf("Saisissez une lettre: ");
         player.letter = getchar();
+        /* Clearing the buffer. */
         while ((c = getchar()) != '\n' && player.letter != EOF)
         {
         }
+
+        if (isExist(player.word, player.letter) == 0)
+            player.chance++;
 
         if (isalpha(player.letter) || player.letter == 32 || player.letter == 39)
         {
@@ -138,12 +148,6 @@ void Game(void)
                 if (player.indexs[i] != 0)
                 {
                     player.word[player.indexs[i] - 1] = player.letter;
-                }
-
-                if (isExist(player.word, player.letter) == 0)
-                    player.chance++;
-                else
-                {
                     for (int j = 0; j < wordLen; j++)
                     {
                         if (player.word[j] == '\0')
