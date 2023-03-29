@@ -36,7 +36,8 @@
   "C_Cpp_Runner.useAddressSanitizer": false,
   "files.associations": {
     "*.html": "html",
-    "functions.h": "c"
+    "functions.h": "c",
+    "time.h": "c"
   },
   "C_Cpp.errorSquiggles": "disabled"
 }

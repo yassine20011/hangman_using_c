@@ -1,40 +1,19 @@
 #include <ncurses.h>
-#include <stdio.h>
-
+#include <unistd.h>
+#include <time.h>
 
 int main()
 {
-    int counter = 0;
-
-    // Initialize ncurses
     initscr();
+    start_color();
+    init_pair(1, COLOR_RED, COLOR_WHITE);
 
-    // Print the initial value of the counter
-    printw("entre un nombre: ");
+    attron(COLOR_PAIR(1));
+    mvprintw(0, 0, "Hello World!");
+    attroff(COLOR_PAIR(1));
     refresh();
 
-    // Wait for user input
-    while (1)
-    {
-        int c = getch();
-        if (c == 'q')
-            break;
-        else if (c == 'a')
-            counter++;
-        else if (c == 'z')
-            counter--;
-        else
-            continue;
-
-        // Clear the screen
-        clear();
-
-        // Print the new value of the counter
-        printw("entre un nombre: %d", counter);
-        refresh();
-    }
-
-    // Exit ncurses
+    getch();
     endwin();
 
     return 0;

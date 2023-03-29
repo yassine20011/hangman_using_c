@@ -4,8 +4,79 @@
 #include <ctype.h>
 #include <time.h>
 #include <string.h>
+#include <ncurses.h>
+#define COLOR_RED 1
+#define COLOR_GREEN 2
+#define COLOR_YELLOW 3
+#define COLOR_BLUE 4
 
 int difficulty[] = {10, 5, 3};
+
+char *F_RED = "\033[0;31m";
+char *RMF = "\033[0;00m";
+
+int isExist(char *word, char letter)
+{
+    int i = 0;
+    while (word[i] != '\0')
+    {
+        if (word[i] == letter)
+            return 1;
+        i++;
+    }
+    return 0;
+}
+
+void keyboard(int X, int Y)
+{
+    int x = X, y = Y;
+    int alpha = 65;
+    start_color();
+    init_pair(1, COLOR_RED, COLOR_BLACK); 
+    init_pair(2, COLOR_GREEN, COLOR_BLACK);
+
+    mvprintw(30, y, "+===+===+===+===+===+===+\n");
+    attron(COLOR_PAIR(2));
+    mvprintw(31, y, "|  ALLOWED CHARACTERS:  |\n");
+    attroff(COLOR_PAIR(2));
+    mvprintw(32, y, "+===+===+===+===+===+===+\n");
+    refresh();
+    for (size_t i = 0; i < 26; i++)
+    {
+        if (isExist(player.alreadyFound, alpha) == 0)
+        {
+            mvprintw(x + 1, y, "| %c |", alpha);
+            refresh();
+        }
+       
+        else
+        {
+            mvprintw(x + 1, y, "|");
+            addch(' ');
+            attron(COLOR_PAIR(1));
+            addch(alpha);
+            attroff(COLOR_PAIR(1));
+            addch(' ');
+            addch('|');
+            refresh();
+        }
+        y += 4;
+        if (y == Y + 24)
+        {
+            mvprintw(x + 1, y, "|\n");
+            mvprintw(x + 2, Y, "+===+===+===+===+===+===+\n");
+            refresh();
+            y = Y;
+            x += 2;
+        }
+        alpha++;
+    }
+    mvprintw(x + 1, y, "| SPACE | ' | - |\n");
+    mvprintw(x + 2, Y, "+===+===+===+===+===+===+\n");
+    refresh();
+
+    usleep(1000000);
+}
 
 int str_len(char *str)
 {
@@ -15,7 +86,7 @@ int str_len(char *str)
     return i;
 }
 
-char penduSurface[11][10] = {
+char penduSurface[11][11] = {
     "_________",
     "|       |",
     "|       |",
@@ -31,54 +102,58 @@ char penduSurface[11][10] = {
 
 void Welcome(void)
 {
-    int c;
-    printf("|---------------------------------------|\n");
-    printf("| Bienvenue dans le jeu du pendu!       |\n");
-    printf("|---------------------------------------|\n");
-    printf("  Saisissez votre nom: ");
-    scanf("%s", player.name);
-    printf("|---------------------------------------|\n");
-    printf("  Saisissez votre username: ");
-    scanf("%s", player.username);
-    printf("|---------------------------------------|\n");
+    initscr();     /* Start curses mode 		  */
+    start_color(); /* enable color */
 
-    printf("Bonjour %s, votre username est %s\n", player.name, player.username);
+    mvprintw(0, 0, "Bienvenue dans le jeu du pendu!");
+    mvprintw(2, 0, "Saisissez votre nom: ");
+    refresh();
+    getstr(player.name);
 
-    // loading animation
-    printf("\nVeuillez patienter");
-    int i = 0;
-    while (i < 3)
-    {
-        printf(".");
-        fflush(stdout);
-        sleep(1);
-        i++;
-    }
-    printf("\n");
+    mvprintw(4, 0, "Bienvenue %s !", player.name);
+    refresh();
+    sleep(1);
 
     // difficulty menu
-    printf("Choisissez votre niveau de difficulte:\n\n");
-    printf("\t1. Facile\n");
-    printf("\t2. Moyen\n");
-    printf("\t3. Difficile\n\n");
-
-    printf("Saisissez votre choix: ");
-    scanf("%d", &player.difficulty);
-    while ((c = getchar()) != '\n' && c != EOF)
-    {
-    } // clear buffer
+    mvprintw(0, 50, "Menu de difficulte :\n\n");
+    refresh();
+    mvprintw(2, 50, "\t1. Facile\n");
+    mvprintw(3, 50, "\t2. Moyen\n");
+    mvprintw(4, 50, "\t3. Difficile\n\n");
+    mvprintw(6, 50, "Choisissez le niveau de difficulte: ");
+    refresh();
+    scanw("%d", &player.difficulty);
 
     // game menu
-    printf("Menu du jeu :\n\n");
-    printf("\t1. Jouer\n");
-    printf("\t2. Options\n");
-    printf("\t3. Quitter\n\n");
+    mvprintw(0, 100, "Menu du jeu :\n\n");
+    refresh();
+    mvprintw(2, 100, "\t1. Nouvelle partie\n");
+    mvprintw(3, 100, "\t2. Charger difficulte du jeu\n");
+    mvprintw(4, 100, "\t3. Quitter\n\n");
+    mvprintw(6, 100, "Saisissez votre choix: ");
+    refresh();
+    scanw("%d", &player.choice);
 
-    printf("Saisissez votre choix: ");
-    scanf("%d", &player.choice);
-    while ((c = getchar()) != '\n' && c != EOF)
+    int i = 0;
+    while (i < 11)
     {
-    } // clear buffer
+        mvprintw(10 + i, 0, penduSurface[i]);
+        refresh();
+        i++;
+    }
+
+    // loading animation
+    mvprintw(15, 60, "Chargement");
+    refresh();
+    i = 0;
+    while (i < 3)
+    {
+        mvprintw(15, 70 + i, ".");
+        refresh();
+        sleep(1);
+        i++;
+        printf("\r");
+    }
 }
 
 void findLetterIndex(char *word, char letter)
@@ -95,78 +170,135 @@ void findLetterIndex(char *word, char letter)
     }
 }
 
-int isExist(char *word, char letter)
+void rePlay(void)
 {
-    int i = 0;
-    while (word[i] != '\0')
+    mvprintw(0, 0, "Voulez-vous rejouer? (y/n): ");
+    refresh();
+    player.replay = getchar();
+    if (player.replay == 'y')
+        Game();
+    else if (player.replay == 'n')
     {
-        if (word[i] == letter)
-            return 1;
-        i++;
+        mvprintw(0, 0, "Au revoir!\n");
+        clear();
     }
-    return 0;
+    else
+    {
+        mvprintw(0, 0, "Choix invalide!\n");
+        clear();
+    }
 }
 
 void Game(void)
 {
     srand(time(NULL)); // pour avoir des nombres aleatoires sans repetition
-    int c;
-    char *words[] = {"jeu", "pendu", "programmation", "c", "python", "javascript", "java", "c++", "c#", "php", "ruby", "swift", "go", "rust", "kotlin", "dart", "scala", "haskell", "erlang", "elixir", "prolog", "clojure", "lisp", "fortran", "cobol", "pascal", "ada", "perl", "lua", "bash", "zsh"};
+    char *words[] = {
+        "jeu", "pendu", "programmation", "c", "python",
+        "javascript", "java", "c++", "c#", "php", "ruby",
+        "swift", "go", "rust", "kotlin", "dart", "scala",
+        "haskell", "erlang", "elixir", "prolog", "clojure",
+        "lisp", "fortran", "cobol", "pascal", "ada", "perl",
+        "lua", "bash", "zsh"};
+
     int wordsLen = arrayLen(words);
     char *randomWord = words[random(0, wordsLen - 1)];
     int wordLen = str_len(randomWord);
+    int k = 0;
 
-    printf("Le mot a trouver contient %d lettres\n", wordLen);
-    printf("\nPendu sur les langages de programmation\n\n");
-    printf("Vous avez %d chances pour trouver le mot\n\n", difficulty[player.difficulty - 1]);
+    mvprintw(25, 50, "Le mot a trouver contient %d lettres\n\n", wordLen);
+    mvprintw(26, 50, "Pendu sur les langages de programmation\n\n");
+    refresh();
 
-    printf("%s\n", randomWord);
     do
     {
 
         if (strcmp(randomWord, player.word) == 0)
         {
-            printf("Bravo vous avez gagne!\n");
-            break;
+            mvprintw(50, 0, "Vous avez gagne!\n");
+            clear();
+            rePlay();
         }
-
-        printf("Saisissez une lettre: ");
-        player.letter = getchar();
-        /* Clearing the buffer. */
-        while ((c = getchar()) != '\n' && player.letter != EOF)
+        else if (player.chance >= difficulty[player.difficulty - 1])
         {
+            mvprintw(50, 0, "Vous avez perdu!\n");
+            clear();
+            rePlay();
         }
 
-        if (isExist(player.word, player.letter) == 0)
-            player.chance++;
+        mvprintw(25, 0, "Chances restantes: %02d", (difficulty[player.difficulty - 1] - player.chance));
+        mvprintw(26, 0, "Word: %s", randomWord);
+        refresh();
 
-        if (isalpha(player.letter) || player.letter == 32 || player.letter == 39)
+        keyboard(32, 50);
+        mvprintw(28, 50, "Saisissez une lettre: ");
+        refresh();
+        player.letter = getchar();
+
+        if (isExist(randomWord, player.letter))
+        {
+            mvprintw(15, 60, "La lettre %c existe dans le mot\n", player.letter);
+            refresh();
+        }
+        else
+        {
+            mvprintw(15, 60, "La lettre %c n'existe pas dans le mot\n", player.letter);
+            refresh();
+            player.chance++;
+            int i = difficulty[player.difficulty - 1] + 1;
+            int j = difficulty[player.difficulty - 1] - player.chance;
+            while (i >= j)
+            {
+                mvprintw(15 + i, 100, penduSurface[i]);
+                refresh();
+                usleep(500000); // 500000 microsecondes = 0.5 seconde
+                i--;
+            }
+        }
+
+        if (isalpha(player.letter) || player.letter == ' ' || player.letter == '-' || player.letter == '\'')
         {
             findLetterIndex(randomWord, player.letter);
-            for (unsigned int i = 0; i < arrayLen(player.indexs); i++)
+            if (player.letter >= 'a' && player.letter <= 'z')
+            {
+                player.alreadyFound[k] = toupper(player.letter);
+                k++;
+            }
+
+            int i = 0;
+            while (i < wordLen)
             {
                 if (player.indexs[i] != 0)
                 {
-                    player.word[player.indexs[i] - 1] = player.letter;
+                    player.word[i] = player.letter;
                     for (int j = 0; j < wordLen; j++)
                     {
                         if (player.word[j] == '\0')
                         {
-                            printf("_ ");
+                            mvprintw(27, 2 * j, "_ "); // 2 * j pour l'espacement entre les lettres du mot
+                            refresh();
+                        }
+                        else if (player.word[j] == ' ')
+                        {
+                            mvprintw(27, 2 * j, "_ ");
+                            refresh();
                         }
                         else
                         {
-                            printf("%c ", player.word[j]);
+                            mvprintw(27, 2 * j, "%c ", player.word[j]);
+                            refresh();
                         }
                     }
-                    printf("\n");
                 }
+                i++;
             }
         }
         else
         {
-            printf("Saisie invalide!\n");
+            mvprintw(20, 50, "La lettre %c n'est pas valide\n", player.letter);
+            refresh();
         }
 
-    } while (player.chance < difficulty[player.difficulty - 1]);
+    } while (1);
+
+    endwin(); /* End curses mode		  */
 }
