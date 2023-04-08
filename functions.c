@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include <unistd.h>
 #include "functions.h"
 #include <ctype.h>
@@ -20,7 +19,7 @@ char penduSurface[11][11] = {
     "|",
     "_________",
 };
-int difficulty[] = {10, 5, 3};
+int difficulty[] = {10, 5, 3}; // the number of tries for each difficulty
 
 /**
  * It takes a word and a letter and finds the index of the letter in the word.
@@ -56,10 +55,10 @@ int isExist(char *word, char letter)
     while (word[i] != '\0')
     {
         if (word[i] == letter)
-            return 1;
+            return 1; // vrai
         i++;
     }
-    return 0;
+    return 0; // faux
 }
 
 /**
@@ -226,8 +225,8 @@ void Game(void)
     srand(time(NULL)); // pour avoir des nombres aleatoires sans repetition
 
     char *words[] = {
-        "jeu", "pendu", "programmation", "c", "python",
-        "javascript", "java", "c++", "php", "ruby",
+        "jeu", "pendu", "programmation", "python",
+        "javascript", "java", "php", "ruby",
         "swift", "go", "rust", "kotlin", "dart", "scala",
         "haskell", "erlang", "elixir", "prolog", "clojure",
         "lisp", "fortran", "cobol", "pascal", "ada", "perl",
@@ -266,8 +265,13 @@ void Game(void)
         }
         else if (player.chance >= difficulty[player.difficulty - 1])
         {
-            mvprintw(25, 0, "Vous avez perdu!\n");
             clear();
+            mvprintw(21,60,"  _____                                                            \n");
+            mvprintw(22,60," / ____|                                                           \n");
+            mvprintw(23,60,"| |  __    __ _   _ __ ___     ___      ___   __   __   ___   _ __ \n");
+            mvprintw(24,60,"| | |_ |  / _` | | '_ ` _ \\   / _ \\    / _ \\  \\ \\ / /  / _ \\ | '__|\n");
+            mvprintw(25,60,"| |__| | | (_| | | | | | | | |  __/   | (_) |  \\ V /  |  __/ | |   \n");
+            mvprintw(26,60," \\_____|  \\__,_| |_| |_| |_|  \\___|    \\___/    \\_/    \\___| |_|   \n");
             rePlay();
         }
 
@@ -350,10 +354,10 @@ void Game(void)
             mvprintw(5, 0, "Message: ");
             attroff(COLOR_PAIR(1));
             mvprintw(5, 9, "La lettre %c n'est pas valide\n", player.letter);
-            refresh();
         }
 
     } while (1);
 
+    
     endwin(); /* End curses mode		  */
 }

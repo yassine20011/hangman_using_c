@@ -5,15 +5,14 @@
 #include <stdlib.h>
 
 /* A macro that returns a random number between min and max. */
-#define random(min, max) (rand() % (max - min + 1) + min)
+#define random(min, max) (rand() % (max - min + 1) + min) 
 
 // A macro that returns the length of an array.
-#define arrayLen(array) (sizeof(array) / sizeof(array[0]))
+#define arrayLen(array) (sizeof(array) / sizeof(array[0])) // for example: arrayLen(words) will return the length of the words array.
 
 void Welcome(void);
 void Game(void);
 void findLetterIndex(char *word, char letter);
-
 
 struct playerData
 {
@@ -32,3 +31,5 @@ struct playerData player;
 
 
 #endif
+
+
