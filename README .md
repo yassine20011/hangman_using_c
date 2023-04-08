@@ -1,3 +1,0 @@
-# Jeu du PENDU
-
-## Description
