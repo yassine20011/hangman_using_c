@@ -86,12 +86,13 @@ int isExist(char *word, char letter)
  * Game() function again
  *
  */
-int rePlay(void)
+void rePlay(void)
 {
     do
     {
         mvprintw(0, 0, "Voulez-vous rejouer? (y/n): ");
         refresh();
+
         player.replay = getchar();
         if (player.replay == 'y' || player.replay == 'Y')
         {
@@ -106,9 +107,9 @@ int rePlay(void)
             clear();
             mvprintw(0, 0, "Au revoir!\n");
             refresh();
+            endwin();
             exit(0);
         }
-        return 0;
     } while (player.replay != 'y' && player.replay != 'Y' && player.replay != 'n' && player.replay != 'N');
 }
 
@@ -166,11 +167,53 @@ void keyboard(int X, int Y)
             x += 2;
         }
         alpha++;
-       
     }
     mvprintw(x + 1, y, "| SPACE | ' | - |\n");
     mvprintw(x + 2, Y, "+===+===+===+===+===+===+\n");
     refresh();
+}
+
+
+/**
+ * The function displays a menu for selecting the difficulty level and prompts the user to choose a
+ * level until a valid input is entered.
+ * 
+ * @param position The position parameter is the column position where the difficulty menu will be
+ * displayed on the screen.
+ */
+void difficultyMenu(int position)
+{
+    do
+    {
+        mvprintw(0, position, "Menu de difficulte :\n\n");
+        mvprintw(2, position, "\t1. Facile\n");
+        mvprintw(3, position, "\t2. Moyen\n");
+        mvprintw(4, position, "\t3. Difficile\n\n");
+        mvprintw(6, position, "Choisissez le niveau de difficulte: ");
+        refresh();
+        scanw("%d", &player.difficulty);
+    } while (player.difficulty < 1 || player.difficulty > 3);
+}
+
+
+/**
+ * The function displays a game menu and prompts the player to make a choice.
+ * 
+ * @param position The position parameter is the column position where the game menu will be displayed
+ * on the screen.
+ */
+void gameMenu(int position)
+{
+    do
+    {
+        mvprintw(0, position, "Menu du jeu :\n\n");
+        mvprintw(2, position, "\t1. Nouvelle partie\n");
+        mvprintw(3, position, "\t2. Charger difficulte du jeu\n");
+        mvprintw(4, position, "\t3. Quitter\n\n");
+        mvprintw(6, position, "Saisissez votre choix: ");
+        refresh();
+        scanw("%d", &player.choice);
+    } while (player.choice < 1 || player.choice > 3);
 }
 
 /* It's the function that is called in the main function, it's the function that prints the welcome
@@ -188,33 +231,8 @@ void Welcome(void)
     mvprintw(4, 0, "Bienvenue %s !", player.name);
     refresh();
     sleep(1);
-
-    // difficulty menu
-    do
-    {
-        mvprintw(0, 50, "Menu de difficulte :\n\n");
-        refresh();
-        mvprintw(2, 50, "\t1. Facile\n");
-        mvprintw(3, 50, "\t2. Moyen\n");
-        mvprintw(4, 50, "\t3. Difficile\n\n");
-        mvprintw(6, 50, "Choisissez le niveau de difficulte: ");
-        refresh();
-        scanw("%d", &player.difficulty);
-    } while (player.difficulty < 1 || player.difficulty > 3);
-
-    // game menu
-    do
-    {
-        mvprintw(0, 100, "Menu du jeu :\n\n");
-        refresh();
-        mvprintw(2, 100, "\t1. Nouvelle partie\n");
-        mvprintw(3, 100, "\t2. Charger difficulte du jeu\n");
-        mvprintw(4, 100, "\t3. Quitter\n\n");
-        mvprintw(6, 100, "Saisissez votre choix: ");
-        refresh();
-        scanw("%d", &player.choice);
-    } while (player.choice < 1 || player.choice > 3);
-
+    difficultyMenu(50);
+    gameMenu(100);
     // loading animation
     int i = 0, j = 0;
     mvprintw(15, 60, "Chargement du jeu");
@@ -295,6 +313,7 @@ void Game(void)
         /* Checking if the player has lost the game. */
         else if (player.chance >= difficulty[player.difficulty - 1])
         {
+            usleep(1500000);
             clear();
             attron(COLOR_PAIR(1));
             for (size_t i = 0; loseAcsiiArt[i]; i++)
@@ -337,6 +356,7 @@ void Game(void)
                 mvprintw(22 + i, 100, penduSurface[i]);
                 refresh();
                 i--;
+                mvprintw(2, 0, "Chances restantes: %02d", (difficulty[player.difficulty - 1] - player.chance));
             }
         }
 
