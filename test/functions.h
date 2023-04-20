@@ -13,6 +13,9 @@
 void Welcome(void);
 void Game(void);
 void findLetterIndex(char *word, char letter);
+int isExist(char *word, char letter);
+void rePlay(void);
+void keyboard(int X, int Y);
 
 struct playerData
 {

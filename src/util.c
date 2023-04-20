@@ -1,24 +1,44 @@
 #include <unistd.h>
-#include "functions.h"
 #include <ctype.h>
 #include <time.h>
 #include <string.h>
 #include <ncurses.h>
+#include "../include/util.h"
 
 // global variables
+
 char penduSurface[11][11] = {
-    "_________",
-    "|       |",
-    "|       |",
-    "|       O",
-    "|      /|\\",
-    "|      / \\",
-    "|",
-    "|",
-    "|",
-    "|",
-    "_________",
+    "_________",   // 0
+    "|       |",   // 1
+    "|       |",   // 2
+    "|       O",   // 3
+    "|      /|\\", // 4
+    "|      / \\", // 5
+    "|",           // 6
+    "|",           // 7
+    "|",           // 8
+    "|",           // 9
+    "_________",   // 10
 };
+
+char *winAcsiiArt[6] = {
+    "__     __   ____    _    _    __          __  _____   _   _   _ ",
+    "\\ \\   / /  / __ \\  | |  | |   \\ \\        / / |_   _| | \\ | | | |",
+    " \\ \\_/ /  | |  | | | |  | |    \\ \\  /\\  / /    | |   |  \\| | | |",
+    "  \\   /   | |  | | | |  | |     \\ \\/  \\/ /     | |   | . ` | | |",
+    "   | |    | |__| | | |__| |      \\  /\\  /     _| |_  | |\\  | |_|",
+    "   |_|     \\____/   \\____/        \\/  \\/     |_____| |_| \\_| (_)",
+};
+
+char *loseAcsiiArt[6] = {
+    "  _____              __  __   ______      ____   __      __  ______   _____  ",
+    " / ____|     /\\     |  \\/  | |  ____|    / __ \\  \\ \\    / / |  ____| |  __ \\ ",
+    "| |  __     /  \\    | \\  / | | |__      | |  | |  \\ \\  / /  | |__    | |__) |",
+    "| | |_ |   / /\\ \\   | |\\/| | |  __|     | |  | |   \\ \\/ /   |  __|   |  _  / ",
+    "| |__| |  / ____ \\  | |  | | | |____    | |__| |    \\  /    | |____  | | \\ \\ ",
+    " \\_____| /_/    \\_\\ |_|  |_| |______|    \\____/      \\/     |______| |_|  \\_\\ ",
+};
+
 int difficulty[] = {10, 5, 3}; // the number of tries for each difficulty
 
 /**
@@ -66,31 +86,30 @@ int isExist(char *word, char letter)
  * Game() function again
  *
  */
-void rePlay(void)
+int rePlay(void)
 {
-    mvprintw(0, 0, "Voulez-vous rejouer? (y/n): ");
-    refresh();
-    player.replay = getchar();
-    if (player.replay == 'y')
+    do
     {
-        clear();
-        for (size_t i = 0; player.alreadyFound[i]; i++)
-            player.alreadyFound[i] = '\0';
-        for (size_t i = 0; player.word[i] != '\0'; i++)
-            player.word[i] = '\0';
-
-        Game();
-    }
-    else if (player.replay == 'n')
-    {
-        mvprintw(0, 0, "Au revoir!\n");
-        clear();
-    }
-    else
-    {
-        mvprintw(0, 0, "Choix invalide!\n");
-        clear();
-    }
+        mvprintw(0, 0, "Voulez-vous rejouer? (y/n): ");
+        refresh();
+        player.replay = getchar();
+        if (player.replay == 'y' || player.replay == 'Y')
+        {
+            clear();
+            memset(player.indexs, 0, sizeof(player.indexs));
+            memset(player.alreadyFound, 0, sizeof(player.alreadyFound));
+            memset(player.word, 0, sizeof(player.word));
+            Game();
+        }
+        else if (player.replay == 'n' || player.replay == 'N')
+        {
+            clear();
+            mvprintw(0, 0, "Au revoir!\n");
+            refresh();
+            exit(0);
+        }
+        return 0;
+    } while (player.replay != 'y' && player.replay != 'Y' && player.replay != 'n' && player.replay != 'N');
 }
 
 /**
@@ -106,7 +125,7 @@ void keyboard(int X, int Y)
 
     start_color();                          // start color mode
     init_pair(1, COLOR_RED, COLOR_BLACK);   // Red
-    init_pair(2, COLOR_GREEN, COLOR_WHITE); // Green
+    init_pair(2, COLOR_GREEN, COLOR_BLACK); // Green
 
     mvprintw(X, y, "+===+===+===+===+===+===+\n");
     mvprintw(X - 1, y, "|");
@@ -147,12 +166,11 @@ void keyboard(int X, int Y)
             x += 2;
         }
         alpha++;
+       
     }
     mvprintw(x + 1, y, "| SPACE | ' | - |\n");
     mvprintw(x + 2, Y, "+===+===+===+===+===+===+\n");
     refresh();
-
-    usleep(1000000);
 }
 
 /* It's the function that is called in the main function, it's the function that prints the welcome
@@ -172,24 +190,30 @@ void Welcome(void)
     sleep(1);
 
     // difficulty menu
-    mvprintw(0, 50, "Menu de difficulte :\n\n");
-    refresh();
-    mvprintw(2, 50, "\t1. Facile\n");
-    mvprintw(3, 50, "\t2. Moyen\n");
-    mvprintw(4, 50, "\t3. Difficile\n\n");
-    mvprintw(6, 50, "Choisissez le niveau de difficulte: ");
-    refresh();
-    scanw("%d", &player.difficulty);
+    do
+    {
+        mvprintw(0, 50, "Menu de difficulte :\n\n");
+        refresh();
+        mvprintw(2, 50, "\t1. Facile\n");
+        mvprintw(3, 50, "\t2. Moyen\n");
+        mvprintw(4, 50, "\t3. Difficile\n\n");
+        mvprintw(6, 50, "Choisissez le niveau de difficulte: ");
+        refresh();
+        scanw("%d", &player.difficulty);
+    } while (player.difficulty < 1 || player.difficulty > 3);
 
     // game menu
-    mvprintw(0, 100, "Menu du jeu :\n\n");
-    refresh();
-    mvprintw(2, 100, "\t1. Nouvelle partie\n");
-    mvprintw(3, 100, "\t2. Charger difficulte du jeu\n");
-    mvprintw(4, 100, "\t3. Quitter\n\n");
-    mvprintw(6, 100, "Saisissez votre choix: ");
-    refresh();
-    scanw("%d", &player.choice);
+    do
+    {
+        mvprintw(0, 100, "Menu du jeu :\n\n");
+        refresh();
+        mvprintw(2, 100, "\t1. Nouvelle partie\n");
+        mvprintw(3, 100, "\t2. Charger difficulte du jeu\n");
+        mvprintw(4, 100, "\t3. Quitter\n\n");
+        mvprintw(6, 100, "Saisissez votre choix: ");
+        refresh();
+        scanw("%d", &player.choice);
+    } while (player.choice < 1 || player.choice > 3);
 
     // loading animation
     int i = 0, j = 0;
@@ -247,31 +271,39 @@ void Game(void)
         /* Checking if the player has won the game. */
         if (strcmp(randomWord, player.word) == 0)
         {
-            attron(COLOR_PAIR(1));
-            mvprintw(2, 100, "Vous avez gagne!\n");
-            attroff(COLOR_PAIR(1));
+            clear();
+
+            attron(COLOR_PAIR(2));
+            for (size_t i = 0; winAcsiiArt[i]; i++)
+            {
+                mvprintw(20 + i, 60, winAcsiiArt[i]);
+            }
+            attroff(COLOR_PAIR(2));
+            system("nohup aplay winSOund.wav > /dev/null 2>&1 &");
             int i = 0;
-            while (i < 6)
+            while (i < 10)
             {
 
-                mvprintw(1, 0, "game restart in %d", 5 - i);
+                mvprintw(1, 0, "game restart in %02d", 9 - i);
                 refresh();
                 sleep(1);
                 i++;
-                printf("\r");
             }
             clear();
             rePlay();
         }
+        /* Checking if the player has lost the game. */
         else if (player.chance >= difficulty[player.difficulty - 1])
         {
             clear();
-            mvprintw(21,60,"  _____                                                            \n");
-            mvprintw(22,60," / ____|                                                           \n");
-            mvprintw(23,60,"| |  __    __ _   _ __ ___     ___      ___   __   __   ___   _ __ \n");
-            mvprintw(24,60,"| | |_ |  / _` | | '_ ` _ \\   / _ \\    / _ \\  \\ \\ / /  / _ \\ | '__|\n");
-            mvprintw(25,60,"| |__| | | (_| | | | | | | | |  __/   | (_) |  \\ V /  |  __/ | |   \n");
-            mvprintw(26,60," \\_____|  \\__,_| |_| |_| |_|  \\___|    \\___/    \\_/    \\___| |_|   \n");
+            attron(COLOR_PAIR(1));
+            for (size_t i = 0; loseAcsiiArt[i]; i++)
+            {
+                mvprintw(20 + i, 60, loseAcsiiArt[i]);
+            }
+            system("nohup aplay loseSound.wav > /dev/null 2>&1 &");
+            attroff(COLOR_PAIR(1));
+            player.chance = 0;
             rePlay();
         }
 
@@ -281,10 +313,10 @@ void Game(void)
         refresh();
 
         /* It's printing the keyboard on the screen. */
-        mvprintw(2, 50, "Saisissez une lettre: ");
         keyboard(8, 50);
+        mvprintw(2, 50, "Saisissez une lettre: ");
+        player.letter = getch(); // It's getting the letter that the player has guessed.
         refresh();
-        player.letter = getchar(); // get the letter from the player
 
         /* It's checking if the letter that the player has guessed is in the word, if it is, it prints a
         message to the player, otherwise it prints another message. */
@@ -298,13 +330,12 @@ void Game(void)
             mvprintw(5, 0, "La lettre %c n'existe pas dans le mot\n", player.letter);
             refresh();
             player.chance++;
-            int i = difficulty[player.difficulty - 1] + 1;
+            int i = 10;
             int j = difficulty[player.difficulty - 1] - player.chance;
             while (i >= j)
             {
-                mvprintw(15 + i, 100, penduSurface[i]);
+                mvprintw(22 + i, 100, penduSurface[i]);
                 refresh();
-                usleep(500000); // 500000 microsecondes = 0.5 seconde
                 i--;
             }
         }
@@ -358,6 +389,5 @@ void Game(void)
 
     } while (1);
 
-    
     endwin(); /* End curses mode		  */
 }
