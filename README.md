@@ -37,7 +37,3 @@ it may not work on other Operating Systems.
 * time.h
 * string.h
 * ncurses.h(for positioning the cursor)
-
-I converted the mp3 to wav using the following command:
-`ffmpeg -i input.mp3 -acodec pcm_s16le -ac 1 -ar 16000 output.wav`
-
