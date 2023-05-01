@@ -1,0 +1,50 @@
+goalkeeper
+defender
+midfielder
+forward
+tackle
+pass
+dribble
+shoot
+header
+volley
+cross
+free kick
+corner
+penalty
+offside
+yellow card
+red card
+referee
+assistant referee
+handball
+foul
+advantage
+counterattack
+press
+marking
+set piece
+wall
+clearance
+throw-in
+inswinger
+outswinger
+penalty shootout
+attacking
+defending
+counter-attacking
+possession
+counter-pressing
+tactical
+training
+conditioning
+formation
+manager
+assistant manager
+substitution
+injury
+fitness
+stamina
+speed
+agility
+skill

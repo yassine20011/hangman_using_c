@@ -4,8 +4,16 @@
 #include <string.h>
 #include <ncurses.h>
 #include "../include/util.h"
+#include "../include/hint.h"
+#include "../include/main.h"
 
-// global variables
+int _random(int min, int max)
+{
+    static int init = 0;
+    srand(time(NULL));
+    init = (rand() % (max - min + 1) + min);
+    return init;
+}
 
 char penduSurface[11][11] = {
     "_________",   // 0
@@ -173,11 +181,10 @@ void keyboard(int X, int Y)
     refresh();
 }
 
-
 /**
  * The function displays a menu for selecting the difficulty level and prompts the user to choose a
  * level until a valid input is entered.
- * 
+ *
  * @param position The position parameter is the column position where the difficulty menu will be
  * displayed on the screen.
  */
@@ -195,25 +202,24 @@ void difficultyMenu(int position)
     } while (player.difficulty < 1 || player.difficulty > 3);
 }
 
-
 /**
  * The function displays a game menu and prompts the player to make a choice.
- * 
+ *
  * @param position The position parameter is the column position where the game menu will be displayed
  * on the screen.
  */
-void gameMenu(int position)
+void theme(int position)
 {
     do
     {
-        mvprintw(0, position, "Menu du jeu :\n\n");
-        mvprintw(2, position, "\t1. Nouvelle partie\n");
-        mvprintw(3, position, "\t2. Charger difficulte du jeu\n");
-        mvprintw(4, position, "\t3. Quitter\n\n");
+        mvprintw(0, position, "Theme du jeu :\n\n");
+        mvprintw(2, position, "\t1. Animaux      | 4. Musique\n");
+        mvprintw(3, position, "\t2. Informatique | 5. Education\n");
+        mvprintw(4, position, "\t3. Football     | 6. Aleatoire\n\n");
         mvprintw(6, position, "Saisissez votre choix: ");
         refresh();
-        scanw("%d", &player.choice);
-    } while (player.choice < 1 || player.choice > 3);
+        scanw("%d", &player.theme);
+    } while (player.theme < 1 || player.theme > 6);
 }
 
 /* It's the function that is called in the main function, it's the function that prints the welcome
@@ -232,7 +238,7 @@ void Welcome(void)
     refresh();
     sleep(1);
     difficultyMenu(50);
-    gameMenu(100);
+    theme(100);
     // loading animation
     int i = 0, j = 0;
     mvprintw(15, 60, "Chargement du jeu");
@@ -264,23 +270,26 @@ void Welcome(void)
  */
 void Game(void)
 {
-    srand(time(NULL)); // pour avoir des nombres aleatoires sans repetition
 
-    char *words[] = {
-        "jeu", "pendu", "programmation", "python",
-        "javascript", "java", "php", "ruby",
-        "swift", "go", "rust", "kotlin", "dart", "scala",
-        "haskell", "erlang", "elixir", "prolog", "clojure",
-        "lisp", "fortran", "cobol", "pascal", "ada", "perl",
-        "lua", "bash", "zsh"};
-
-    int wordsLen = arrayLen(words);
-    char *randomWord = words[random(0, wordsLen - 1)];
+    int randomWordIndex = _random(0, 41);
+    read_words();
+    char *randomWord = data.words[randomWordIndex];
+    // remove the \n from the word
+    randomWord[strlen(randomWord) - 1] = '\0';
     int wordLen = strlen(randomWord);
-    int k = 0;
+
+    start_color();                          /* enable color */
+    init_pair(3, COLOR_BLACK, COLOR_WHITE); // White
 
     mvprintw(2, 100, "Le mot a trouver contient %d lettres\n\n", wordLen);
-    mvprintw(3, 100, "Pendu sur les langages de programmation\n\n");
+    mvprintw(3, 100, "Vous avez %2d chances\n\n", difficulty[player.difficulty - 1]);
+    attron(COLOR_PAIR(3));
+    mvprintw(29, 0, "+================================================+\n");
+    mvprintw(30, 0, "| Appuyez sur la touche '0' pour quitter le jeu  |\n");
+    mvprintw(31, 0, "+================================================+\n");
+    mvprintw(32, 0, "| Appuyez sur la touche '1' pour une indication  |\n");
+    mvprintw(33, 0, "+================================================+\n");
+    attroff(COLOR_PAIR(3));
     refresh();
 
     do
@@ -290,7 +299,6 @@ void Game(void)
         if (strcmp(randomWord, player.word) == 0)
         {
             clear();
-
             attron(COLOR_PAIR(2));
             for (size_t i = 0; winAcsiiArt[i]; i++)
             {
@@ -328,7 +336,7 @@ void Game(void)
 
         /* It's printing the number of chances left and the word to guess. */
         mvprintw(2, 0, "Chances restantes: %02d", (difficulty[player.difficulty - 1] - player.chance));
-        mvprintw(3, 0, "Word: %s", randomWord);
+        // mvprintw(3, 0, "Word: %s", randomWord);
         refresh();
 
         /* It's printing the keyboard on the screen. */
@@ -337,14 +345,29 @@ void Game(void)
         player.letter = getch(); // It's getting the letter that the player has guessed.
         refresh();
 
+        if (player.letter == '0')
+        {
+            clear();
+            endwin();
+            exit(0);
+        }
+        else if (player.letter == '1')
+        {
+            attron(COLOR_PAIR(2));
+            mvprintw(3, 0, "Indication: ");
+            attroff(COLOR_PAIR(2));
+            mvprintw(3, 12, "%s", hint(randomWordIndex));
+            refresh();
+        }
+
         /* It's checking if the letter that the player has guessed is in the word, if it is, it prints a
         message to the player, otherwise it prints another message. */
         if (isExist(randomWord, player.letter))
         {
-            mvprintw(5, 0, "La lettre %c existe dans le mot\n", player.letter);
+            mvprintw(5, 0, "Message: La lettre %c existe dans le mot\n", player.letter);
             refresh();
         }
-        else
+        else if (player.letter != '1')
         {
             mvprintw(5, 0, "La lettre %c n'existe pas dans le mot\n", player.letter);
             refresh();
@@ -360,6 +383,7 @@ void Game(void)
             }
         }
 
+        int k = 0;
         /* It's checking if the letter allowed to the player to guess the word. */
         if (isalpha(player.letter) || player.letter == ' ' || player.letter == '-' || player.letter == '\'')
         {
@@ -400,11 +424,8 @@ void Game(void)
         }
         else
         {
-
-            attron(COLOR_PAIR(1));
-            mvprintw(5, 0, "Message: ");
-            attroff(COLOR_PAIR(1));
-            mvprintw(5, 9, "La lettre %c n'est pas valide\n", player.letter);
+            mvprintw(5, 0, "Message: La lettre %c n'est pas autorisee\n", player.letter);
+            refresh();
         }
 
     } while (1);

@@ -4,8 +4,7 @@
 
 #include <stdlib.h>
 
-/* A macro that returns a random number between min and max. */
-#define random(min, max) (rand() % (max - min + 1) + min) 
+
 
 // A macro that returns the length of an array.
 #define arrayLen(array) (sizeof(array) / sizeof(array[0])) // for example: arrayLen(words) will return the length of the words array.
@@ -28,11 +27,13 @@ struct playerData
     char alreadyFound[40]; // Les lettres déjà trouvées
     int indexs[20]; // Les indexs des lettres trouvées
     int chance; // Le nombre de chance du joueur
-    int choice; // Le choix du joueur
+    int theme; // Le thème du jeu
     int difficulty; // La difficulté du jeu
 };
 
 struct playerData player;
+
+
 
 
 #endif

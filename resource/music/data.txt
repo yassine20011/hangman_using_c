@@ -1,0 +1,50 @@
+Melody: tune, harmony, rhythm
+Instrument: piano, guitar, violin
+Genre: rock, jazz, classical
+Tempo: speed, pace, rhythm
+Beat: pulse, rhythm, tempo
+Chorus: refrain, choir, song
+Lyrics: words, text, poetry
+Harmony: chords, melody, agreement
+Concert: performance, show, gig
+Band: group, musicians, ensemble
+DJ: disc jockey, music mixer, turntable artist
+Orchestra: symphony, ensemble, conductor
+Solo: single, individual, alone
+Vocals: singing, voice, choir
+Acoustic: sound, non-electric, unplugged
+Amplifier: sound system, speaker, volume
+Bass: low, deep, foundation
+Drum: percussion, beat, rhythm
+Guitarist: musician, player, artist
+Headphones: earphones, earbuds, sound isolating
+Jazz: blues, swing, improvisation
+Keyboard: piano, synthesizer, organ
+Mic: microphone, recording, sound
+Note: tone, pitch, sound
+Performance: show, concert, gig
+Pop: popular, mainstream, commercial
+Record: album, LP, single
+Remix: rework, edit, change
+Rhythm: beat, tempo, pattern
+Saxophone: brass, jazz, wind instrument
+Soundtrack: music, movie, score
+Studio: recording, production, control room
+Symphony: orchestra, classical, composition
+Track: song, recording, piece
+Vinyl: record, LP, album
+Ballad: slow song, love song, romantic
+Baritone: voice, range, singer
+Choir: vocals, group, chorus
+Classical: music, traditional, symphonic
+Concerto: classical, composition, soloist
+Electric: guitar, sound, amplified
+Folk: traditional, acoustic, cultural
+Hip-hop: rap, urban, beat
+Melancholic: sad, emotional, melancholy
+Musicianship: art, skill, talent
+Opera: classical, singing, performance
+Performance: live, show, concert
+Piano: keys, classical, grand
+Songwriter: composer, author, musician
+Treble: high, soprano, sound

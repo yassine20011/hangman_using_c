@@ -1,0 +1,50 @@
+Mammal: vertebrate, beast, creature
+Reptile: serpent, lizard, crocodile
+Amphibian: frog, toad, newt
+Bird: avian, fowl, poultry
+Fish: aquatic, seafood, marine
+Insect: bug, arthropod, creepy-crawly
+Arachnid: spider, scorpion, tick
+Mollusk: snail, clam, octopus
+Crustacean: crab, lobster, shrimp
+Rodent: mouse, rat, squirrel
+Primate: ape, monkey, chimpanzee
+Carnivore: meat-eater, predator, hunter
+Herbivore: plant-eater, vegetarian, grazer
+Omnivore: mixed-diet, eater, scavenger
+Predator: hunter, killer, carnivore
+Prey: victim, quarry, target
+Domesticated: tamed, trained, house-trained
+Wild: untamed, feral, savage
+Endangered: threatened, at risk, vulnerable
+Extinct: no longer existent, vanished, gone
+Safari: expedition, journey, trek
+Zoo: wildlife park, menagerie, animal sanctuary
+Aquarium: fish tank, marine exhibit, aquatic habitat
+Habitat: natural environment, ecosystem, territory
+Ecosystem: environment, ecology, biosphere
+Nest: lair, den, burrow
+Migration: journey, trek, movement
+Hibernation: dormancy, sleep, torpor
+Camouflage: disguise, concealment, stealth
+Territorial: defending territory, protective, guarding
+Nocturnal: active at night, night-loving, night-time
+Diurnal: active during the day, daytime, day-loving
+Herbicide: weed killer, plant poison, pesticide
+Pesticide: insecticide, bug spray, rodent poison
+Venomous: poisonous, toxic, deadly
+Non-venomous: harmless, non-toxic, safe
+Carnation: a small pink or white flower
+Sting: bite, prick, jab
+Claws: talons, nails, pincers
+Mane: hair, fur, coat
+Tail: appendage, rear end, rudder
+Whiskers: vibrissae, feelers, hairs
+Beak: bill, snout, muzzle
+Hoof: foot, paw, talon
+Scale: plate, armor, skin
+Horn: antler, tusk, spike
+Tusk: tooth, fang, tine
+Fur: hair, pelt, fleece
+Feather: plume, quill, down
+Fin: flipper, paddle, sail

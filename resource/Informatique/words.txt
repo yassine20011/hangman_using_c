@@ -1,0 +1,41 @@
+algorithm
+binary
+cache
+compiler
+cryptography
+debugging
+encryption
+firewall
+firmware
+function
+hacker
+interface
+kernel
+library
+malware
+middleware
+operating system
+optimization
+parallel computing
+programming
+protocol
+query
+ram
+registry
+scripting
+software
+source code
+sql
+stack
+syntax
+threading
+virtual machine
+vulnerability
+wi-fi
+xml
+agile
+api
+blockchain
+cybersecurity
+devops
+docker

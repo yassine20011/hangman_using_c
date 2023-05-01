@@ -1,0 +1,41 @@
+Algorithm: method, process, procedure
+Binary: dual, double, twofold
+Cache: memory, buffer, store
+Compiler: translator, converter, interpreter
+Cryptography: encryption, encoding, ciphering
+Debugging: fixing, troubleshooting, errors
+Encryption: encoding, scrambling, obfuscation
+Firewall: barrier, shield, protection
+Firmware: software, program, code
+Function: subroutine, method, procedure
+Hacker: cracker, intruder, attacker
+Interface: connection, link, communication
+Kernel: core, center, nucleus
+Library: archive, repository, collection
+Malware: virus, trojan, spyware
+Middleware: software, bridge, connector
+Operating system: OS, software, platform
+Optimization: improvement, enhancement, refinement
+Parallel computing: multicore, multiprocessing, parallelism
+Programming: coding, scripting, authoring
+Protocol: procedure, method, rule
+Query: question, request, inquiry
+RAM: memory, storage, cache
+Registry: database, directory, catalog
+Scripting: programming, coding, automation
+Software: program, application, code
+Source code: code, program, script
+SQL: database, query, language
+Stack: memory, data structure, pile
+Syntax: grammar, structure, format
+Threading: concurrency, parallelism, multitasking
+Virtual machine: VM, emulator, simulator
+Vulnerability: weakness, flaw, security hole
+Wi-Fi: wireless, internet, networking
+XML: markup language, data format, code
+Agile: methodology, process, approach
+API: interface, programming interface, endpoint
+Blockchain: distributed ledger, decentralized database, digital ledger
+Cybersecurity: information security, computer security, network security
+DevOps: development operations, software development, IT operations
+Docker: container, containerization, container platform

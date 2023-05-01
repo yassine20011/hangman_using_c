@@ -1,0 +1,50 @@
+Goalkeeper: goalie, netminder, shot-stopper
+Defender: back, center-back, fullback
+Midfielder: halfback, playmaker, center-mid
+Forward: striker, attacker, frontman
+Tackle: challenge, intercept, slide
+Pass: feed, distribute, transfer
+Dribble: run with the ball, weave, jink
+Shoot: strike, hit, score
+Header: aerial, jump, nod
+Volley: strike, hit, shoot
+Cross: delivery, center, ball-in
+Free kick: set piece, dead ball, direct kick
+Corner: set piece, dead ball, flag kick
+Penalty: spot kick, PK, shoot-out
+Offside: illegal position, beyond the last defender, in an advanced position
+Yellow card: caution, booking, warning
+Red card: sending-off, dismissal, ejection
+Referee: official, umpire, arbitrator
+Assistant referee: linesman, sideline official, flagman
+Handball: touching the ball with the hand, illegal handling, deliberate touch
+Foul: infringement, offense, violation
+Advantage: benefit, gain, edge
+Counterattack: breakaway, swift attack, quick strike
+Press: pressure, harass, close down
+Marking: man-to-man, tight coverage, shadowing
+Set piece: dead ball situation, restart, free kick
+Wall: defensive wall, barrier, block
+Clearance: kick-out, hoof, long ball
+Throw-in: sideline throw, restart, put-in
+Inswinger: curve ball, bending kick, in-swerving delivery
+Outswinger: bending kick, curve ball, out-swerving delivery
+Penalty shootout: tie-breaker, shoot-out, spot-kicks
+Attacking: offensive, aggressive, forward-thinking
+Defending: defensive, protective, cautious
+Counter-attacking: swift attack, breakaway, quick strike
+Possession: control, dominance, ball control
+Counter-pressing: pressure after losing possession, immediate pressure, high-press
+Tactical: strategic, game plan, planning
+Training: practice, preparation, workout
+Conditioning: fitness, physical preparation, strength
+Formation: system, setup, tactics
+Manager: coach, head coach, gaffer
+Assistant manager: assistant coach, deputy, second-in-command
+Substitution: sub, replacement, change
+Injury: ailment, harm, damage
+Fitness: physical health, wellbeing, condition
+Stamina: endurance, staying power, resilience
+Speed: velocity, quickness, pace
+Agility: nimbleness, flexibility, suppleness
+Skill: ability, expertise, talent
