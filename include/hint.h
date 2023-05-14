@@ -1,3 +1,5 @@
+#pragma once
+
 #include "main.h"
 
 #define MAX_LENGTH 256 // max length of a line in the file
