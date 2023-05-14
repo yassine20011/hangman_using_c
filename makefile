@@ -6,5 +6,8 @@ test: test.c
 
 clean: rm -f bin/game
 
+container: docker build -t hello-world .
+	docker run -t -i -e "PULSE_SERVER=/mnt/wslg/PulseServer" -v \\wsl$\Ubuntu\mnt\wslg:/mnt/wslg/ hello-world
+
 run: bin/pendu
 	./bin/pendu

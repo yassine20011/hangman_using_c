@@ -4,6 +4,6 @@
 #define MAX_WORDS 255  // max number of words in the file
 
 
-
-char *hint(int index);
+char *hint(int index, int boolean);
 int read_words();
+

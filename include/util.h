@@ -5,7 +5,6 @@
 #include <stdlib.h>
 
 
-
 // A macro that returns the length of an array.
 #define arrayLen(array) (sizeof(array) / sizeof(array[0])) // for example: arrayLen(words) will return the length of the words array.
 

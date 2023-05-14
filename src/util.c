@@ -7,13 +7,6 @@
 #include "../include/hint.h"
 #include "../include/main.h"
 
-int _random(int min, int max)
-{
-    static int init = 0;
-    srand(time(NULL));
-    init = (rand() % (max - min + 1) + min);
-    return init;
-}
 
 char penduSurface[11][11] = {
     "_________",   // 0
@@ -48,6 +41,14 @@ char *loseAcsiiArt[6] = {
 };
 
 int difficulty[] = {10, 5, 3}; // the number of tries for each difficulty
+
+int _random(int min, int max)
+{
+    static int init = 0;
+    srand(time(NULL));
+    init = (rand() % (max - min + 1) + min);
+    return init;
+}
 
 /**
  * It takes a word and a letter and finds the index of the letter in the word.
@@ -98,13 +99,14 @@ void rePlay(void)
 {
     do
     {
-        mvprintw(0, 0, "Voulez-vous rejouer? (y/n): ");
+        mvprintw(0, 0, "Voulez-vous rejouer? (o/n): ");
         refresh();
 
         player.replay = getchar();
-        if (player.replay == 'y' || player.replay == 'Y')
+        if (player.replay == 'o' || player.replay == 'O')
         {
             clear();
+            hint(-1, 1);
             memset(player.indexs, 0, sizeof(player.indexs));
             memset(player.alreadyFound, 0, sizeof(player.alreadyFound));
             memset(player.word, 0, sizeof(player.word));
@@ -118,7 +120,7 @@ void rePlay(void)
             endwin();
             exit(0);
         }
-    } while (player.replay != 'y' && player.replay != 'Y' && player.replay != 'n' && player.replay != 'N');
+    } while (player.replay != 'O' && player.replay != 'o' && player.replay != 'n' && player.replay != 'N');
 }
 
 /**
@@ -146,6 +148,7 @@ void keyboard(int X, int Y)
     addch('|');
     mvprintw(X - 2, y, "+===+===+===+===+===+===+\n");
     refresh();
+
     for (size_t i = 0; i < 26; i++)
     {
         if (isExist(player.alreadyFound, alpha) == 0)
@@ -153,13 +156,13 @@ void keyboard(int X, int Y)
             mvprintw(x + 1, y, "| %c |", alpha);
             refresh();
         }
-
         else
         {
             mvprintw(x + 1, y, "|");
             addch(' ');
             attron(COLOR_PAIR(1));
-            addch(alpha);
+            if (isExist(player.alreadyFound, alpha) == 1)
+                addch(alpha);
             attroff(COLOR_PAIR(1));
             addch(' ');
             addch('|');
@@ -176,6 +179,7 @@ void keyboard(int X, int Y)
         }
         alpha++;
     }
+
     mvprintw(x + 1, y, "| SPACE | ' | - |\n");
     mvprintw(x + 2, Y, "+===+===+===+===+===+===+\n");
     refresh();
@@ -226,8 +230,7 @@ void theme(int position)
 message, the difficulty menu, the game menu, and the loading animation. */
 void Welcome(void)
 {
-    initscr();     /* Start curses mode 		  */
-    start_color(); /* enable color */
+    initscr(); /* Start curses mode 		  */
 
     mvprintw(0, 0, "Bienvenue dans le jeu du pendu!");
     mvprintw(2, 0, "Saisissez votre nom: ");
@@ -277,6 +280,7 @@ void Game(void)
     // remove the \n from the word
     randomWord[strlen(randomWord) - 1] = '\0';
     int wordLen = strlen(randomWord);
+    int k = 0;
 
     start_color();                          /* enable color */
     init_pair(3, COLOR_BLACK, COLOR_WHITE); // White
@@ -302,7 +306,7 @@ void Game(void)
             attron(COLOR_PAIR(2));
             for (size_t i = 0; winAcsiiArt[i]; i++)
             {
-                mvprintw(20 + i, 60, winAcsiiArt[i]);
+                mvprintw(20 + i, 60, "%s" ,winAcsiiArt[i]);
             }
             attroff(COLOR_PAIR(2));
             system("nohup aplay winSOund.wav > /dev/null 2>&1 &");
@@ -326,7 +330,7 @@ void Game(void)
             attron(COLOR_PAIR(1));
             for (size_t i = 0; loseAcsiiArt[i]; i++)
             {
-                mvprintw(20 + i, 60, loseAcsiiArt[i]);
+                mvprintw(20 + i, 60, "%s",loseAcsiiArt[i]);
             }
             system("nohup aplay loseSound.wav > /dev/null 2>&1 &");
             attroff(COLOR_PAIR(1));
@@ -354,9 +358,9 @@ void Game(void)
         else if (player.letter == '1')
         {
             attron(COLOR_PAIR(2));
-            mvprintw(3, 0, "Indication: ");
+            mvprintw(4, 100, "Indication: ");
             attroff(COLOR_PAIR(2));
-            mvprintw(3, 12, "%s", hint(randomWordIndex));
+            mvprintw(4, 112, "%s", hint(randomWordIndex, 0));
             refresh();
         }
 
@@ -376,23 +380,19 @@ void Game(void)
             int j = difficulty[player.difficulty - 1] - player.chance;
             while (i >= j)
             {
-                mvprintw(22 + i, 100, penduSurface[i]);
+                mvprintw(22 + i, 100, "%s",penduSurface[i]);
                 refresh();
                 i--;
                 mvprintw(2, 0, "Chances restantes: %02d", (difficulty[player.difficulty - 1] - player.chance));
             }
         }
 
-        int k = 0;
         /* It's checking if the letter allowed to the player to guess the word. */
         if (isalpha(player.letter) || player.letter == ' ' || player.letter == '-' || player.letter == '\'')
         {
             findLetterIndex(randomWord, player.letter);
-            if (player.letter >= 'a' && player.letter <= 'z')
-            {
-                player.alreadyFound[k] = toupper(player.letter);
-                k++;
-            }
+            player.alreadyFound[k] = toupper(player.letter);
+            k++;
 
             int i = 0;
             while (i < wordLen)

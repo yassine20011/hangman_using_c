@@ -10,6 +10,7 @@
 struct main
 {
     char words[256][256]; // words array
+    int lines; // number of lines in file
 };
 
 struct main data;
