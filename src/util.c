@@ -5,7 +5,7 @@
 #include <ncurses.h>
 #include "../include/util.h"
 #include "../include/hint.h"
-#include "../include/main.h"
+
 
 
 char penduSurface[11][11] = {

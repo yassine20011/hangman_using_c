@@ -13,4 +13,4 @@ struct main
     int lines; // number of lines in file
 };
 
-struct main data;
+extern struct main data;

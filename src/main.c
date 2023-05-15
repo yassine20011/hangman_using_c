@@ -1,5 +1,8 @@
 #include "../include/main.h"
 
+struct playerData player;
+struct main data;
+
 /**
  * The function displays an introduction to the Hangman game and waits for a keypress to start playing
  * while disabling input buffering and echoing in the terminal.
@@ -43,9 +46,6 @@ void intro(void)
  */
 int main()
 {
-
-   
-
     intro();
     Welcome();
     Game();

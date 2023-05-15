@@ -1,9 +1,5 @@
 #pragma once
 
-#ifndef UTIL_H
-#define UTIL_H
-
-
 #include <stdlib.h>
 
 
@@ -32,11 +28,4 @@ struct playerData
     int difficulty; // La difficulté du jeu
 };
 
-struct playerData player;
-
-
-
-
-#endif
-
-
+extern struct playerData player;

@@ -8,4 +8,3 @@
 
 char *hint(int index, int boolean);
 int read_words();
-
