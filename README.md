@@ -1,5 +1,6 @@
 # Jeu du PENDU
 
+[lien vers le projet](https://github.com/yassine20011/project)
 ## Description
 
 Ce jeu est un jeu de pendu. Le but est de trouver le mot caché en entrant des lettres. Si le mot est trouvé, le joueur gagne. Sinon, le joueur perd.
@@ -18,7 +19,6 @@ Ce jeu est un jeu de pendu. Le but est de trouver le mot caché en entrant des l
 - resouces/ : Contient les fichiers de ressources (\*.txt)
 - html/ : Contient un fichier html pour afficher les resulats du joueur et avoir un historique des parties.
 - tests/ : Contient les fichiers de tests
-- Makefile : Pour compiler le projet facilement
 
 
 ## les bibliothèques utilisées
@@ -36,17 +36,17 @@ Ce jeu est un jeu de pendu. Le but est de trouver le mot caché en entrant des l
 
 Pour pouvoir compiler et exécuter ce projet, vous devez avoir installé `Docker` dans votre système d'exploitation.
 
-### Pourquoi Utiliser utiliser Ubuntu avec WSLg ?
+### Pourquoi Utiliser Ubuntu avec WSLg ?
 
 Nous avons choisi d'utiliser Ubuntu avec WSLg pour la compilation et l'exécution du projet, car cela présente plusieurs avantages. Premièrement, c'est plus facile et plus rapide à configurer par rapport à d'autres options. De plus, nous pouvons utiliser le terminal de Windows 11 pour compiler et exécuter le projet, ce qui simplifie davantage le processus. Cela est particulièrement important dans notre jeu, car il y a des éléments sonores que nous ne pourrions pas entendre si nous utilisions le terminal d'Ubuntu.
 
 ## Avant de compiler et exécuter le projet ?
 
-Vous devez un subSystem Linux (WSL) dans votre windows 11 pour compiler et exécuter le projet.
+Vous devez un subSystem Linux (WSL) dans votre windows pour compiler et exécuter le projet.
 
 Sinon, vous pouvez utiliser un autre système d'exploitation (Linux, Mac OS, etc.)
 
-Pour installer un subSystem Linux (WSL) dans votre windows 11, vous pouvez suivre les étapes suivantes :
+Pour installer un subSystem Linux (WSL) dans votre windows, vous pouvez suivre les étapes suivantes :
 
 - Ouvrez PowerShell en tant qu'administrateur
 - Exécutez la commande suivante :
