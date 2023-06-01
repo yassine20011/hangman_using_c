@@ -12,8 +12,9 @@ void findLetterIndex(char *word, char letter);
 int isExist(char *word, char letter);
 void rePlay(void);
 void keyboard(int X, int Y);
-void gameMenu(int position);
 void difficultyMenu(int position);
+int _random(int min, int max);
+void theme(int position);
 
 struct playerData
 {
