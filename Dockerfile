@@ -17,6 +17,8 @@ RUN apt-get install -y --no-install-recommends \
     gcc \
     make \
     git \
+    libjson-c-dev \
+    python3 \
     $(apt-cache --names-only search '^<package-name>' | awk '{ print $1 }' | xargs echo)
 
 

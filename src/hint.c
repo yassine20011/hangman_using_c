@@ -4,13 +4,13 @@
 #include "../include/main.h"
 #include <ncurses.h>
 
-static char paths[6][MAX_LENGTH] = {
+char paths[6][MAX_LENGTH] = {
     "./resource/animals",
     "./resource/Informatique",
-    "./resource/foot"
+    "./resource/foot",
     "./resource/music",
     "./resource/edu",
-    "./resource/",
+    "./resource/random",
 };
 
 /**
@@ -32,7 +32,7 @@ char *hint(int index, int boolean)
 
     static char hints[3][MAX_LENGTH] = {"/hint1.txt", "/hint2.txt", "/hint3.txt"};
     static char hint[MAX_LENGTH];
-    static char errorString[] = "Plus aucun indice n'est disponible";
+    static char errorString[] = "Aucun indice n'est disponible";
     char path[MAX_LENGTH];
 
     strcpy(path, paths[player.theme - 1]);
@@ -80,11 +80,12 @@ char *hint(int index, int boolean)
  */
 int read_words()
 {
-    char path[MAX_LENGTH];
-    strcpy(path, paths[player.theme - 1]);
-    strcat(path, "/words.txt");
+    char path[MAX_LENGTH]; // path = "./resource/random"
+    strcpy(path, paths[player.theme - 1]); // path  = "./resource/random"
+    strcat(path, "/words.txt"); // path = "./resource/random/words.txt"
+    
     // the * in *fp means that fp is a pointer to a FILE object (not a FILE object itself) and that it is uninitialized (it doesn't point to anything yet) and that it will be initialized by the fopen function.
-    FILE *fp = fopen(path, "r");
+    FILE *fp = fopen(path, "r"); // r = read
 
     if (fp == NULL)
     {

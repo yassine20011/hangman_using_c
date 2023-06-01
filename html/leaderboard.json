@@ -1,0 +1,44 @@
+[
+  {
+    "time": "2023-05-28 02:12:06",
+    "name": "John",
+    "guessed_words": ["apple", "banana", "cat"],
+    "score": 5
+  },
+  {
+    "time": "2023-05-28 02:13:41",
+    "name": "Emma",
+    "guessed_words": ["dog", "elephant"],
+    "score": 9
+  },
+  {
+    "time": "2023-05-28 02:14:06",
+    "name": "Michael",
+    "guessed_words": ["cat", "elephant"],
+    "score": 3
+  },
+  {
+    "time": "2023-05-28 02:15:22",
+    "name": "Sophia",
+    "guessed_words": ["apple", "banana", "dog"],
+    "score": 7
+  },
+  {
+    "time": "2023-05-28 02:16:39",
+    "name": "James",
+    "guessed_words": ["cat", "dog", "elephant"],
+    "score": 6
+  },
+  {
+    "time": "2023-05-29 00:16:38",
+    "name": "yassinosx",
+    "guessed_words": [],
+    "score": 0
+  },
+  {
+    "time": "2023-05-29 00:54:57",
+    "name": "1",
+    "guessed_words": ["migration"],
+    "score": 1
+  }
+]

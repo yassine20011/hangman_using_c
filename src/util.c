@@ -6,8 +6,6 @@
 #include "../include/util.h"
 #include "../include/hint.h"
 
-
-
 char penduSurface[11][11] = {
     "_________",   // 0
     "|       |",   // 1
@@ -99,11 +97,11 @@ void rePlay(void)
 {
     do
     {
-        mvprintw(0, 0, "Voulez-vous rejouer? (o/n): ");
+        mvprintw(0, 0, "Voulez-vous rejouer? (Y/n): ");
         refresh();
 
         player.replay = getchar();
-        if (player.replay == 'o' || player.replay == 'O')
+        if (player.replay == 'Y' || player.replay == 'y')
         {
             clear();
             hint(-1, 1);
@@ -114,13 +112,10 @@ void rePlay(void)
         }
         else if (player.replay == 'n' || player.replay == 'N')
         {
-            clear();
-            mvprintw(0, 0, "Au revoir!\n");
-            refresh();
             endwin();
-            exit(0);
+            system("clear");
         }
-    } while (player.replay != 'O' && player.replay != 'o' && player.replay != 'n' && player.replay != 'N');
+    } while (player.replay != 'Y' && player.replay != 'y' && player.replay != 'n' && player.replay != 'N');
 }
 
 /**
@@ -224,6 +219,7 @@ void theme(int position)
         refresh();
         scanw("%d", &player.theme);
     } while (player.theme < 1 || player.theme > 6);
+    read_words(); // read the words from the file and store them in the words array
 }
 
 /* It's the function that is called in the main function, it's the function that prints the welcome
@@ -275,7 +271,6 @@ void Game(void)
 {
 
     int randomWordIndex = _random(0, 41);
-    read_words();
     char *randomWord = data.words[randomWordIndex];
     // remove the \n from the word
     randomWord[strlen(randomWord) - 1] = '\0';
@@ -303,24 +298,29 @@ void Game(void)
         if (strcmp(randomWord, player.word) == 0)
         {
             clear();
+            person.score++;
+            person.num_words++;
+            strcpy(person.guessed_words[person.num_words - 1], randomWord);
             attron(COLOR_PAIR(2));
             for (size_t i = 0; winAcsiiArt[i]; i++)
             {
-                mvprintw(20 + i, 60, "%s" ,winAcsiiArt[i]);
+                mvprintw(20 + i, 60, "%s", winAcsiiArt[i]);
             }
             attroff(COLOR_PAIR(2));
-            system("nohup aplay winSOund.wav > /dev/null 2>&1 &");
+            system("nohup aplay winSound.wav > /dev/null 2>&1 &");
             int i = 0;
-            while (i < 10)
+            while (i < 6)
             {
 
-                mvprintw(1, 0, "game restart in %02d", 9 - i);
+                mvprintw(1, 0, "game restart in %02d", 5 - i);
                 refresh();
                 sleep(1);
                 i++;
             }
             clear();
+            player.chance = 0;
             rePlay();
+            break;
         }
         /* Checking if the player has lost the game. */
         else if (player.chance >= difficulty[player.difficulty - 1])
@@ -330,12 +330,13 @@ void Game(void)
             attron(COLOR_PAIR(1));
             for (size_t i = 0; loseAcsiiArt[i]; i++)
             {
-                mvprintw(20 + i, 60, "%s",loseAcsiiArt[i]);
+                mvprintw(20 + i, 60, "%s", loseAcsiiArt[i]);
             }
             system("nohup aplay loseSound.wav > /dev/null 2>&1 &");
             attroff(COLOR_PAIR(1));
             player.chance = 0;
             rePlay();
+            break;
         }
 
         /* It's printing the number of chances left and the word to guess. */
@@ -380,7 +381,7 @@ void Game(void)
             int j = difficulty[player.difficulty - 1] - player.chance;
             while (i >= j)
             {
-                mvprintw(22 + i, 100, "%s",penduSurface[i]);
+                mvprintw(22 + i, 100, "%s", penduSurface[i]);
                 refresh();
                 i--;
                 mvprintw(2, 0, "Chances restantes: %02d", (difficulty[player.difficulty - 1] - player.chance));

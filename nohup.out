@@ -1,3 +1,0 @@
-Playing WAVE 'intro.wav' : Signed 16 bit Little Endian, Rate 44100 Hz, Mono
-Aborted by signal Interrupt...
-aplay: pcm_write:2086: write error: Interrupted system call

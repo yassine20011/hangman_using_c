@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Stats</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="table-container">
+        <table>
+            <tr>
+                <th>Player name</th>
+                <th>Guessed words</th>
+                <th>Score</th>
+                <th>Date</th>
+            </tr>
+            <tr style="background-color: #f2f2f2;">
+
+            </tr>
+        </table>
+    </div>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-left">
+                <p id="year"></p>
+            </div>
+            <div class="footer-right">
+                <p>Created with <span class="heart">❤</span> by <a href="https:yassineamjad.me">Yassine Amjad</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script> let date = new Date();
+    let year = document.getElementById("year");
+    year.innerHTML = "© " + date.getFullYear() + " - " + date.getFullYear();
+
+    function sortData(data) {
+        data.sort(function (a, b) {
+            return b.score - a.score;
+        });
+    }
+
+    $.getJSON("leaderboard.json", function (data) {
+        sortData(data);
+        let i = 0;
+        for (i = 0; i < data.length; i++) {
+            let player = data[i];
+            let row = "<tr>";
+            row += "<td>" + player.name + "</td>";
+            row += player.guessed_words.length == 0 ? "<td> None </td>" : "<td>" + player.guessed_words + "</td>";
+            row += "<td>" + player.score + "</td>";
+            row += "<td>" + Date(player.time).toLocaleString(); + "</td>";
+            row += "</tr>";
+            $("table").append(row);
+        }
+    });
+    </script>
+</body>
+
+</html>

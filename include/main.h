@@ -6,11 +6,15 @@
 #include "hint.h"
 #include <unistd.h> 
 #include <termios.h> // for tcgetattr(), tcsetattr()
+#include <stdlib.h>
+#include <string.h>
+#include <json-c/json.h>
+#include <time.h>
+
 
 struct main
 {
     char words[256][256]; // words array
-    int lines; // number of lines in file
 };
 
 extern struct main data;

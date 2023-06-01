@@ -17,7 +17,7 @@ void difficultyMenu(int position);
 
 struct playerData
 {
-    char name[20]; // Player name
+    char name[50]; // Player name
     char letter; // la lettre entrée par le joueur
     char replay; // Rejouer ou non
     char word[20]; // le mot a trouver par le joueur
@@ -29,3 +29,12 @@ struct playerData
 };
 
 extern struct playerData player;
+
+
+typedef struct {
+    char guessed_words[20][50]; // guessed words
+    int num_words; // number of words
+    int score; // score
+} PlayerStats;
+
+extern PlayerStats person;
