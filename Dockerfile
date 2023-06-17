@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM ubuntu:kinetic
 
 # Create app directory
 RUN mkdir -p /mini_project
