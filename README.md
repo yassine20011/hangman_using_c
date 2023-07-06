@@ -1,10 +1,5 @@
 # Jeu du PENDU
 
-[lien vers le projet](https://github.com/yassine20011/project)
-## Description
-
-Ce jeu est un jeu de pendu. Le but est de trouver le mot caché en entrant des lettres. Si le mot est trouvé, le joueur gagne. Sinon, le joueur perd.
-
 ## Qu'est-ce que nous utilisons pour réaliser ce projet ?
 
 - C language
