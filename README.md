@@ -92,7 +92,7 @@ Après avoir cloné le projet, vous devez charger l'image Docker et exécuter le
 - Exécutez la commande suivante pour charger l'image Docker :
 
 ```bash
-docker build -t mini-project .
+docker build -t mini-project.
 ```
 
 - Exécutez la commande suivante pour exécuter le conteneur Docker à partir de l'image Docker chargée précédemment et montez le dossier `/mnt/wslg` dans le conteneur Docker pour accéder aux fichiers de votre sous-système Linux (WSL) dans Windows 11 (WSLg) :
@@ -123,14 +123,3 @@ C'est mieux d'exécuter le projet en plein écran. Avec un terminal dehors votre
 
 
 C'est tout. Amusez-vous bien !
-```
-
-## Auteurs
-
- - AMJAD Yassine
- - Aboudaira Youssef 
- - Ouahdani Zakaria
- - Belrhazi Ahmed
- - Ouizid Ziad
-
-```
